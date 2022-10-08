@@ -7,10 +7,12 @@ using namespace std;
 class Player{
     string player;
     int count;
-    static int counter;
+    int counter;
     static int position;
+    bool won;
     void progress(int dice) {
         count += dice;
+        counter = 0;
         cout << "You are now at " << count << endl;
     }    
 public: 
@@ -18,6 +20,7 @@ public:
     void roll_die();
     void ladder();
     void snake();
-    void win(int tries);
+    bool win(int tries);
     ~Player();
+    int getPosition(); 
 };

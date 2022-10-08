@@ -3,23 +3,22 @@
 
 Player::Player(string nam) : player(nam) {
         count = 1;
+        counter = 0;
+        won = false;
     }
 void Player::roll_die() {
-    while(counter < 3) {
-        if (counter == 3) {
-            counter = 0;
-            cout << "Unlucky! 3 sixes in a row. Turn cancelled.";
-            break;
-        }
-        int dice = rand()%6 + 1;
+    int dice = rand()%6 + 1;
         if (dice == 6) {
-            counter++;
-            roll_die();
+            if (counter >= 3) {
+                counter = 0;
+                cout << "Unlucky! 3 sixes in a row. Turn cancelled!" << endl;
+            } else {
+                counter++;
+                roll_die();
+            }
         } else {
             progress(dice);
-            break;
-        }
-    }
+        }    
 }
 void Player::ladder() {
     if (count == 4) {
@@ -72,14 +71,22 @@ void Player::snake() {
         cout << "Oops! You stepped on a snake. You have moved to " << count << " position." << endl; 
     }
 }
-void Player::win(int tries) {
+bool Player::win(int tries) {
     if (count >= 100) {
         cout << "Congrats " << player << " you have beaten the game!" << endl;
         cout << "You came at position " << position << "." << endl;
         position++;
         tries++;
+        won = true;
+        return won;
+    } else {
+        return won;
     }
 }
+int Player::getPosition() {
+    return position;
+
+}
 Player::~Player() {
-        cout << "Player " << player << " is now removed from the game";
+        cout << "Player " << player << " is now removed from the game" << endl;
     }
